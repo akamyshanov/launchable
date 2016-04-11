@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/lgmj67l8r3pu3h2u?svg=true)](https://ci.appveyor.com/project/akamyshanov/launchable)
+
 # Launchable
 Easily install your .NET console apps as windows services. Internally uses `sc` to install, uninstall, modify, start and stop services.
 
