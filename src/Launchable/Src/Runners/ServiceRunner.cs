@@ -5,18 +5,19 @@ using Launchable.Helpers;
 
 namespace Launchable.Runners
 {
-    class ServiceRunner<T> : ServiceBase
-            where T : ILaunchable, new()
+    class ServiceRunner : ServiceBase
     {
         static ServiceRunner()
         {
             DirectoryHelpers.SetCurrentDirectory();
         }
 
-        private readonly ILaunchable _instance = new T();
+        private readonly ILaunchable _instance;
 
-        public ServiceRunner()
+        public ServiceRunner(Func<ILaunchable> factory)
         {
+            _instance = factory();
+
             CanHandlePowerEvent = false;
             CanHandleSessionChangeEvent = false;
             CanPauseAndContinue = false;
@@ -62,13 +63,10 @@ namespace Launchable.Runners
                 File.WriteAllText("stop.err.log", ex.ToString());
             }
         }
-    }
 
-    public static class ServiceRunner
-    {
-        public static void Run<T>() where T : ILaunchable, new()
+        public static void Run(Func<ILaunchable> factory)
         {
-            ServiceBase.Run(new ServiceRunner<T>());
+            Run(new ServiceRunner(factory));
         }
     }
 }

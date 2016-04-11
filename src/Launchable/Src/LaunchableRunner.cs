@@ -14,11 +14,11 @@ namespace Launchable
             DirectoryHelpers.SetCurrentDirectory();
         }
 
-        public static void Run<T>(string[] args, bool throwOnError = false) where T : ILaunchable, new()
+        public static void Run(Func<ILaunchable> factory, string[] args, bool throwOnError = false)
         {
             try
             {
-                RunImpl<T>(args);
+                RunImpl(factory, args);
             }
             catch (Exception ex)
             {
@@ -30,23 +30,28 @@ namespace Launchable
             }
         }
 
-        private static void RunImpl<T>(string[] args) where T : ILaunchable, new()
+        public static void Run<T>(string[] args, bool throwOnError = false) where T : ILaunchable, new()
+        {
+            Run(() => new T(), args, throwOnError);
+        }
+
+        private static void RunImpl(Func<ILaunchable> factory, string[] args)
         {
             args = args ?? new string[0];
 
             if (!args.Any())
             {
-                ConsoleRunner.Run<T>();
+                ConsoleRunner.Run(factory);
                 return;
             }
 
             switch (args[0].ToLower())
             {
                 case "--service":
-                    ServiceRunner.Run<T>();
+                    ServiceRunner.Run(factory);
                     break;
                 case "--console":
-                    ConsoleRunner.Run<T>();
+                    ConsoleRunner.Run(factory);
                     break;
 
                 case "--install":

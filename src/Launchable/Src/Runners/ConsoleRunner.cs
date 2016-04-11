@@ -5,15 +5,20 @@ using Launchable.Helpers;
 
 namespace Launchable.Runners
 {
-    public class ConsoleRunner<T> where T : ILaunchable, new()
+    public class ConsoleRunner
     {
         static ConsoleRunner()
         {
             DirectoryHelpers.SetCurrentDirectory();
         }
 
-        private readonly T _instance = new T();
+        private readonly ILaunchable _instance;
         private readonly ManualResetEventSlim _cancelEvent = new ManualResetEventSlim(false);
+
+        public ConsoleRunner(Func<ILaunchable> factory)
+        {
+            _instance = factory();
+        }
 
         public void Run()
         {
@@ -31,13 +36,10 @@ namespace Launchable.Runners
             args.Cancel = true;
             _cancelEvent.Set();
         }
-    }
 
-    public static class ConsoleRunner
-    {
-        public static void Run<T>() where T : ILaunchable, new()
+        public static void Run(Func<ILaunchable> factory)
         {
-            new ConsoleRunner<T>().Run();
+            new ConsoleRunner(factory).Run();
         }
     }
 }
