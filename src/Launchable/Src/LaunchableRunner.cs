@@ -73,14 +73,14 @@ namespace Launchable
         private static void ShowUsage()
         {
             Console.WriteLine("Usage:");
-            Console.WriteLine($"\t{Path.GetFileName(Assembly.GetEntryAssembly().Location)} [<command>]");
-            Console.WriteLine("To launch in console, do not specify any arguments");
-            Console.WriteLine("Commands:");
-            Console.WriteLine("\t-c, --console".PadRight(36) + "Run in console (with passed args)");
-            Console.WriteLine("\t-i, --install [serviceName]".PadRight(36) + "Installs the service [with a custom service name]");
-            Console.WriteLine("\t-u, --uninstall [serviceName]".PadRight(36) + "Uninstalls the service [with a custom service name]");
-            Console.WriteLine("\t--start".PadRight(36) + "Starts the service");
-            Console.WriteLine("\t--stop".PadRight(36) + "Stops the service");
+            Console.WriteLine($"{Path.GetFileName(Assembly.GetEntryAssembly().Location)} [<args>]");
+            Console.WriteLine("To launch in console, omit any arguments");
+            Console.WriteLine("Arguments:");
+            Console.WriteLine("  -c, --console".PadRight(36) + "Run in console (with passed args)");
+            Console.WriteLine("  -i, --install [serviceName]".PadRight(36) + "Installs the service [with a custom service name]");
+            Console.WriteLine("  -u, --uninstall [serviceName]".PadRight(36) + "Uninstalls the service [with a custom service name]");
+            Console.WriteLine("  --start".PadRight(36) + "Starts the service");
+            Console.WriteLine("  --stop".PadRight(36) + "Stops the service");
         }
     }
 }

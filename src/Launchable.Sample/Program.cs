@@ -18,12 +18,11 @@ namespace Launchable.Sample
         private static void Log(string msg)
         {
             msg = DateTime.Now.ToString("R") + " / " + msg;
-
             Console.WriteLine(msg);
             File.AppendAllText("log.txt", msg + Environment.NewLine);
         }
 
-        private static void Main(string[] args)
+        static void Main(string[] args)
         {
             LaunchableRunner.Run<Program>(args);
         }
