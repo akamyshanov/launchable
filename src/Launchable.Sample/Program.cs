@@ -25,6 +25,10 @@ namespace Launchable.Sample
         static void Main(string[] args)
         {
             LaunchableRunner.Run<Program>(args);
+
+            // or
+
+            LaunchableRunner.Run(() => new Program(), args);
         }
     }
 }
